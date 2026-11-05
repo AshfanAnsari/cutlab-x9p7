@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy: CutLab</title>
+<meta name="description" content="CutLab privacy policy: what data the relay holds, where renders run, what is never collected, and your export and deletion rights.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="../help/">Help</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap prose">
+  <div class="page-head">
+    <p class="crumb"><a href="../">CutLab</a> / Legal / Privacy policy</p>
+    <h1>Privacy policy</h1>
+  </div>
+
+  <h2>What the relay holds</h2>
+  <ul>
+    <li><strong>Account data:</strong> your email address and a password hash, held by the shared login system that also serves Our Study Home.</li>
+    <li><strong>Your work:</strong> cloud project documents, the media you upload for jobs or cloud projects, and the outputs jobs produce, including finished renders.</li>
+    <li><strong>Job records:</strong> what you queued, when, which lane ran it, and the result or error it ended with.</li>
+    <li><strong>Connect tokens:</strong> a cryptographic hash, a label and dates. The token itself is never stored.</li>
+    <li><strong>Feedback:</strong> reports you send from the editor, tied to your account so the owner can follow up.</li>
+  </ul>
+  <p>
+    The relay is a hosted Supabase project (database plus file storage). Every table and
+    file is scoped to an account, and the scoping is enforced by the database itself.
+  </p>
+
+  <h2>Where processing happens</h2>
+  <ul>
+    <li><strong>Server jobs</strong> run on the operator's server: media analysis, transcription, separation and renders you send to the server queue.</li>
+    <li><strong>Agent renders</strong> run on your own assistant's machine. Your files travel from relay storage to that machine, and the finished render travels back.</li>
+    <li><strong>Prompt edits</strong> send your instruction text and the project document to the AI lane in use: your connected assistant, a provider whose key you supplied, or, where offered, the house lane's model gateway. Media files are not sent to the prompt lane.</li>
+  </ul>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>No advertising, no sale of personal data, no third-party analytics or trackers on the editor or these pages.</li>
+    <li>No training of models on your projects or media by the operator.</li>
+    <li>No reading of your projects for any purpose beyond running the jobs you queue, keeping the relay safe, and answering feedback you send.</li>
+  </ul>
+
+  <h2>Cookies and local storage</h2>
+  <p>
+    The editor stores your session token, settings and a local media cache in your
+    browser's local storage and IndexedDB. That is what keeps you signed in and your
+    work available offline in the tab. Clearing the browser's site data removes all of
+    it. These pages set nothing.
+  </p>
+
+  <h2>Retention and backups</h2>
+  <p>
+    Relay data is kept until you delete it or delete your account. The operator keeps
+    offline backups of the relay tables so a broken relay can be restored; backups are
+    operational copies, they are not shared, and they age out as newer backups replace
+    them. A deletion therefore disappears from the live relay immediately and from
+    backups as they rotate.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>
+    Inside the app you can export everything the relay holds for you and delete your
+    account outright, at any time, without asking anyone. These tools are the practical
+    form of the access, correction, portability and erasure rights described by India's
+    DPDP Act and, where it applies, the GDPR. For anything the tools cannot do, contact
+    [OWNER TO CONFIRM].
+  </p>
+
+  <h2>Children</h2>
+  <p>
+    CutLab is a general-audience editing tool and is not directed at children. Accounts
+    are for users old enough to agree to the terms, or supervised by a guardian.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    If this policy changes in a way that matters, the change will be noted here with a
+    new date before it takes effect.
+  </p>
+
+  <p class="draft-flag" style="margin-top:48px">DRAFT: PENDING OWNER REVIEW. This page is a working draft published for review; it has not yet been approved as the binding text.</p>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
