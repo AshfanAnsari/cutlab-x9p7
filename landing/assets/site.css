@@ -85,6 +85,10 @@ figure.shot img {
   width: 100%; height: auto; display: block;
   border: 1px solid var(--hairline); border-radius: 8px; background: var(--surface);
 }
+figure.shot video {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--hairline); border-radius: 8px; background: var(--surface);
+}
 figure.shot figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 figure.shot.narrow img { max-width: 760px; }
 
