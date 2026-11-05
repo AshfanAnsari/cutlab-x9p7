@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CutLab: a browser video editor with server rendering</title>
+<meta name="description" content="CutLab is a video editor that runs in your browser. Editing stays light on your machine, renders run on the CutLab server or on your own Muse, and your projects live under your own account.">
+<link rel="icon" href="assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="help/">Help</a>
+      <a href="legal/terms.html">Terms</a>
+      <a href="legal/privacy.html">Privacy</a>
+      <a class="btn" href="../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">Browser video editor, in beta</p>
+    <h1>Edit video in the browser. Render it somewhere with real power.</h1>
+    <p class="lede">
+      CutLab is a timeline editor that runs entirely in your browser, built for short-form
+      work. The heavy jobs, making proxies, analysing media and rendering the final file,
+      run on the CutLab server. If you have your own Muse, you can connect it and let it
+      render on your machine instead. Your computer only ever runs the light editor.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="../">Open the editor</a>
+      <a class="btn secondary" href="help/render-with-your-claude.html">How rendering works</a>
+    </div>
+    <p class="cta-note">Free during beta. Sign up with an email address inside the editor.</p>
+  </div>
+
+  <figure class="shot">
+    <img src="assets/editor.png" alt="The CutLab editor: media bin on the left, preview in the centre, inspector on the right, timeline and server jobs at the bottom" width="1600" height="1000">
+    <figcaption>The editor as it ships today: media bin, preview, timeline, inspector and the server jobs panel. Screenshot of the current build.</figcaption>
+  </figure>
+
+  <section aria-labelledby="what">
+    <h2 id="what">What the editor does</h2>
+    <p class="section-intro">
+      The project file is a single document that the preview, the server renderer and your
+      own AI all read. That one decision is what makes the rest of CutLab possible.
+    </p>
+    <div class="rows">
+      <div class="row">
+        <h3>Timeline editing</h3>
+        <p>Multi-track video, audio and text timelines with compound clips, adjustment layers,
+        multicam, masks, transitions and keyframed colour. Preview plays lightweight proxies
+        the server makes for you, so scrubbing stays smooth on a modest laptop.</p>
+      </div>
+      <div class="row">
+        <h3>Prompt edits</h3>
+        <p>Describe a change in plain words in the Prompt tab. CutLab rewrites the project to
+        match and reports what it changed. The edit lands in the same project file you can
+        inspect and undo, never in a black box.</p>
+      </div>
+      <div class="row">
+        <h3>Replicate an edit</h3>
+        <p>Give CutLab a reference video and your own clips. It analyses the reference, cuts,
+        beat grid, captions and pacing, and rebuilds that structure with your footage.</p>
+      </div>
+      <div class="row">
+        <h3>Sound and analysis jobs</h3>
+        <p>Transcription, beat detection, clip tracking and vocal separation run as server
+        jobs. Results come back into the project: captions on the text track, markers on the
+        beat grid, isolated vocals as audio you can mix.</p>
+      </div>
+      <div class="row">
+        <h3>Colour</h3>
+        <p>A serial grade stack with curves, a qualifier, LUT support and scopes. The render
+        applies the same grade chain the preview shows, including per-hue curves.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="render">
+    <h2 id="render">Two ways to finish a render</h2>
+    <p class="section-intro">
+      In the Export panel you choose who renders. The CutLab server queue is the default:
+      upload, wait, download the finished MP4. The second door is yours. Connect your own
+      Muse with a personal token and queue renders for it; your Muse claims the job,
+      downloads the project and media, renders with the official CutLab renderer on its own
+      machine, and uploads the MP4 back to your queue. The server never touches agent jobs.
+    </p>
+    <figure class="shot narrow">
+      <img src="assets/export-panel.png" alt="The Export panel showing the Render with choice: CutLab server or My Muse" width="1600" height="1000" loading="lazy">
+      <figcaption>The Export panel. One choice decides where your render runs.</figcaption>
+    </figure>
+    <p>
+      Step by step: <a href="help/connect-your-ai.html">connect your AI</a>, then
+      <a href="help/render-with-your-claude.html">render with your Muse</a>.
+      If you would rather keep AI out of it, connect a key from a provider such as Mercury
+      in the prompt lane instead. Keys stay on your side either way.
+    </p>
+  </section>
+
+  <section aria-labelledby="account">
+    <h2 id="account">Your account is the boundary</h2>
+    <p class="section-intro">
+      Everything on the relay is scoped to your account: projects, media, jobs and connect
+      tokens. One account cannot read another account's files, and the rules are enforced
+      on the server, not in the page. The Account panel in the editor shows your live
+      numbers, exports everything the relay holds for you as a single download, and deletes
+      the account outright when you ask.
+    </p>
+    <figure class="shot narrow">
+      <img src="assets/account.png" alt="The Account panel showing storage use, the cloud project list, job history, data export and account deletion" width="1600" height="1000" loading="lazy">
+      <figcaption>The Account panel of a new account: storage meter, cloud projects, job history, data export and deletion in one place.</figcaption>
+    </figure>
+    <table class="facts">
+      <caption class="sr-only" style="position:absolute;left:-9999px">CutLab beta limits</caption>
+      <tr><th scope="col">Limit</th><th scope="col">During beta</th><th scope="col">Why</th></tr>
+      <tr>
+        <td>Working storage</td><td>200 MB per account</td>
+        <td>The relay runs on a shared free tier. The meter in your Account panel counts the same files the limit counts.</td>
+      </tr>
+      <tr>
+        <td>Single file size</td><td>Up to 50 MB</td>
+        <td>The storage bucket itself refuses larger files, so the limit holds even if a client misbehaves.</td>
+      </tr>
+      <tr>
+        <td>Price</td><td>Free during beta</td>
+        <td>Paid tiers, if they come, will be priced from measured running costs. Nothing is charged today.</td>
+      </tr>
+      <tr>
+        <td>Your renders</td><td>Server queue, or your own machine</td>
+        <td>Renders on your own Muse use your compute and never enter the server queue.</td>
+      </tr>
+    </table>
+    <p style="margin-top:20px">
+      Details live in the help pages: <a href="help/files-and-quotas.html">files and quotas</a> and
+      <a href="help/export-and-delete.html">export and delete your data</a>.
+    </p>
+  </section>
+
+  <section aria-labelledby="start">
+    <h2 id="start">Start in the editor</h2>
+    <p class="section-intro">
+      Open the editor, tap Sign in, and create an account with your email. Local editing
+      works without an account; the account is what turns on cloud saves, server jobs and
+      the connect token. If something breaks, the Feedback button in the editor writes
+      straight to the relay under your account.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="../">Open the editor</a>
+      <a class="btn secondary" href="help/">Read the help pages</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="legal/terms.html">Terms</a>
+      <a href="legal/privacy.html">Privacy</a>
+      <a href="legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
