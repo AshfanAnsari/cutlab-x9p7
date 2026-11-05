@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect your AI: CutLab help</title>
+<meta name="description" content="How the CutLab connect token works: create one in Settings, give it to your Muse, and revoke it whenever you like.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="./">Help</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap prose">
+  <div class="page-head">
+    <p class="crumb"><a href="../">CutLab</a> / <a href="./">Help</a> / Connect your AI</p>
+    <h1>Connect your AI</h1>
+  </div>
+
+  <p>
+    A connect token is a personal key that starts with <code>clt_</code>. It lets an AI
+    assistant work on your CutLab projects: reading a project, running prompt edits, and
+    rendering jobs you queue for it. You connect your chat, never an API key, so nothing
+    about the connection touches an AI company's billing.
+  </p>
+
+  <h2>Create a token</h2>
+  <ol>
+    <li>Open the <a href="../../">editor</a> and sign in. The token registers under your account, so sign-in comes first.</li>
+    <li>Open the <strong>View</strong> menu and choose <strong>Settings</strong>.</li>
+    <li>Scroll to the <strong>Connections</strong> section.</li>
+    <li>Choose <strong>Generate new token</strong>. Signed in, the token's hash registers under your account in the same step.</li>
+    <li>Choose <strong>Verify</strong>. The badge should read <em>Connected</em>.</li>
+  </ol>
+  <p>
+    You can also paste a token an assistant issued you into the same field and verify it
+    the same way.
+  </p>
+
+  <h2>Hand it to your Muse</h2>
+  <p>
+    Give your Muse the token and point it at the agent brief, a short document that
+    explains the whole protocol:
+  </p>
+  <pre><code>https://hjdyvaetxhvxzgsdlibt.supabase.co/storage/v1/object/public/cutlab-public/AGENT-BRIEF.md</code></pre>
+  <p>
+    The brief covers the connector endpoint, the claim and render flow, and the honesty
+    rules an agent follows while it holds one of your jobs. Your Muse can also fetch the
+    renderer package itself from the same public host when a render needs it.
+  </p>
+
+  <h2>What the token can do</h2>
+  <ul>
+    <li>List and read <strong>your</strong> projects.</li>
+    <li>Fetch time-limited download links for the media of <strong>your</strong> jobs.</li>
+    <li>See, claim, complete or fail render jobs you queued for your agent.</li>
+    <li>Drive prompt edits on your projects through the prompt lane.</li>
+  </ul>
+  <p>
+    Every query the connector answers is scoped to the account that registered the token.
+    There is no setting that widens it, and the relay stores only a hash of the token,
+    never the token itself.
+  </p>
+
+  <h2>Stay safe with it</h2>
+  <ul>
+    <li>Treat the token like a password. Anyone holding it can act on your projects as your agent.</li>
+    <li>Revoke it in the same Connections section whenever you stop using an assistant. The relay refuses a revoked token from that moment.</li>
+    <li>If a token was registered before you had an account, sign in and register it again so it is scoped to you.</li>
+  </ul>
+
+  <p class="note">
+    One limit to know: only an assistant that can run code on a machine can render for
+    you. A chat window that only talks can still read projects and help with prompt edits.
+    The rendering flow is covered in <a href="render-with-your-claude.html">Render with your Muse</a>.
+  </p>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a href="../legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

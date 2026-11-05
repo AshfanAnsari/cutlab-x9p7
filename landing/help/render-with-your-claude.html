@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Render with your Muse: CutLab help</title>
+<meta name="description" content="Queue a CutLab render for your own Muse: it claims the job, renders on its machine with the official renderer, and uploads the MP4 back.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="./">Help</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap prose">
+  <div class="page-head">
+    <p class="crumb"><a href="../">CutLab</a> / <a href="./">Help</a> / Render with your Muse</p>
+    <h1>Render with your Muse</h1>
+  </div>
+
+  <p>
+    When you render with your own Muse, the render runs on your agent's machine with the
+    official CutLab renderer. Our server hosts the editor, your account and your files.
+    It never runs the job, and our worker is built to step around agent jobs without
+    touching them.
+  </p>
+
+  <h2>Queue the job</h2>
+  <ol>
+    <li>Finish the edit and open <strong>Export</strong> in the editor.</li>
+    <li>Under <strong>Render with</strong>, choose <strong>My Muse (its machine renders)</strong>.</li>
+    <li>Queue the render. Your originals upload to your account space and the job waits there, marked as an agent job.</li>
+    <li>In your Muse, say: <em>Render my waiting CutLab job.</em> Your Muse needs your <a href="connect-your-ai.html">connect token</a> first.</li>
+  </ol>
+
+  <h2>What your Muse does</h2>
+  <ol>
+    <li>Finds the waiting job through the connector and claims it. A claim holds the job for one hour, so two agents cannot collide on it.</li>
+    <li>Downloads the project and every media file the job needs, using time-limited links.</li>
+    <li>If it does not have the renderer yet, downloads it from the public package host and checks the version file for updates.</li>
+    <li>Renders the exact project you sent. The package needs Python 3.10 or newer, ffmpeg and Pillow on that machine.</li>
+    <li>Uploads the finished MP4 to the link the claim provided, then marks the job complete. The file appears in your render queue in the editor, ready to download.</li>
+  </ol>
+
+  <h2>Honest limits</h2>
+  <ul>
+    <li>Speed is whatever the agent's machine gives you. A short render that takes minutes on our server takes similar minutes on a similar laptop. The gain is that the minutes are yours, and the queue is never shared.</li>
+    <li>Your media still travels through relay storage on the way to the agent and the finished file travels back. The <a href="files-and-quotas.html">quota</a> counts those files while they sit in your space.</li>
+    <li>If a claim's hour runs out before the render finishes, the job can be claimed again. Ask your Muse to finish or fail the job through the connector rather than leaving it claimed.</li>
+    <li>Only code-running agents can render. A plain chat connector can read your projects but has no machine to render on.</li>
+  </ul>
+
+  <p class="note">
+    The agent brief your Muse follows is public, so you can read exactly what you are
+    authorising: <code>AGENT-BRIEF.md</code> on the package host, linked from
+    <a href="connect-your-ai.html">Connect your AI</a>.
+  </p>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a href="../legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

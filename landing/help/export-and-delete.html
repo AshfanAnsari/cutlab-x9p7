@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Export and delete your data: CutLab help</title>
+<meta name="description" content="Download everything the CutLab relay holds for your account, and what account deletion removes, including the shared login note.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="./">Help</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap prose">
+  <div class="page-head">
+    <p class="crumb"><a href="../">CutLab</a> / <a href="./">Help</a> / Export and delete your data</p>
+    <h1>Export and delete your data</h1>
+  </div>
+
+  <h2>Export my data</h2>
+  <p>
+    Open <strong>Account</strong> in the editor and choose <strong>Export my data</strong>.
+    The editor builds one zip from the relay, scoped to your account:
+  </p>
+  <ul>
+    <li><code>projects.json</code>: your cloud projects, full documents, in the same shape the editor opens.</li>
+    <li><code>media-manifest.json</code>: every media asset the relay tracks for you, with the storage path of each part.</li>
+    <li><code>jobs.json</code>: your job history across server renders, analyses and agent renders.</li>
+    <li><code>connect-tokens.json</code>: your connect tokens by label and date. Token hashes are never exported, so the file cannot be used as a key.</li>
+  </ul>
+  <p>
+    The manifest lists originals by path. Download any originals you still need from the
+    app while signed in, before you delete the account.
+  </p>
+
+  <h2>Delete your account</h2>
+  <p>
+    In the same Account panel, the Delete account section asks you to type your email
+    address to confirm. Deletion then runs on the server in a fixed order:
+  </p>
+  <ol>
+    <li>Every file in your relay storage space is deleted.</li>
+    <li>Your rows are deleted from the project, media, job, command, token and version tables.</li>
+    <li>Your login is deleted last, so nothing is left pointing at an account that no longer exists.</li>
+  </ol>
+  <p>The panel reports how many files and records were removed.</p>
+
+  <p class="note">
+    One consequence to understand before you confirm: CutLab shares its login system
+    with Our Study Home, a study planner run by the same operator. The account you delete
+    here is the same login. Deleting it removes that login for both services, along with
+    the CutLab data listed above.
+  </p>
+
+  <h2>What deletion does not touch</h2>
+  <ul>
+    <li>Projects and media cached locally in your browser. Clear the browser's site data if you want those gone too.</li>
+    <li>Files your own Muse downloaded while rendering for you. Those live on that machine, under your control.</li>
+    <li>Copies inside the operator's offline backups. Backups exist so a broken relay can be restored; they are not a user archive and they age out as new backups replace them.</li>
+  </ul>
+
+  <p>
+    Deletion is immediate and cannot be undone. If you might come back, export first and
+    simply sign out instead.
+  </p>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a href="../legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

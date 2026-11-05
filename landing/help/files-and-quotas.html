@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Files and quotas: CutLab help</title>
+<meta name="description" content="Where CutLab files live, what the 200 MB working storage and 50 MB per-file limits count, and how the storage meter works.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="./">Help</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap prose">
+  <div class="page-head">
+    <p class="crumb"><a href="../">CutLab</a> / <a href="./">Help</a> / Files and quotas</p>
+    <h1>Files and quotas</h1>
+  </div>
+
+  <h2>Two places your work lives</h2>
+  <p>
+    <strong>In your browser:</strong> the editor keeps your open project and a local media
+    cache on your machine. Local work never touches the relay, and you can edit signed out
+    for as long as you like.
+  </p>
+  <p>
+    <strong>On the relay:</strong> when you save to the cloud, queue a job or publish media
+    for a cloud project, files go to storage space that belongs to your account and only
+    your account. Other accounts cannot list, read or write that space. The relay is a
+    hosted database and file store (Supabase) that the CutLab server and your browser both
+    talk to.
+  </p>
+
+  <h2>The limits during beta</h2>
+  <table class="facts">
+    <tr><th scope="col">Limit</th><th scope="col">Value</th><th scope="col">How it is enforced</th></tr>
+    <tr>
+      <td>Working storage</td>
+      <td>200 MB per account</td>
+      <td>A database check counts your files when a job is created, and the server checks again before it starts a job. A job that would cross the limit is refused with the reason.</td>
+    </tr>
+    <tr>
+      <td>Single file</td>
+      <td>50 MB</td>
+      <td>The storage bucket has its own platform limit at the same number, so an oversize upload fails at the door even if a client tries to send one.</td>
+    </tr>
+  </table>
+  <p>
+    The relay runs on a shared free tier, 1 GB of storage and 5 GB of monthly transfer for
+    every account together. The limits keep one account from crowding out the rest while
+    the beta is small.
+  </p>
+
+  <h2>What counts toward the 200 MB</h2>
+  <ul>
+    <li>Originals you upload as inputs for server jobs, and the outputs those jobs write back, including finished renders.</li>
+    <li>Media the server publishes for your cloud projects: the original plus its proxy, thumbnail and waveform data.</li>
+    <li>Inputs and outputs of agent renders, while they sit in your space between upload and download.</li>
+  </ul>
+  <p>
+    Project documents themselves are small JSON and live in the database, outside the
+    storage meter.
+  </p>
+
+  <h2>The meter</h2>
+  <p>
+    Open <strong>Account</strong> in the editor's top bar. The storage bar there adds up
+    the real files in your relay space at the moment you open it, which is the same set of
+    files the quota counts. It also lists your cloud projects with their saved version
+    counts and your recent jobs on both render lanes.
+  </p>
+
+  <h2>Working within the limits</h2>
+  <ul>
+    <li>Download finished renders promptly. Outputs stay in your space until you remove the account, and they are usually the biggest files there.</li>
+    <li>Trim long source clips before uploading. A job only needs the range the edit uses.</li>
+    <li>Keep masters on your own disk. CutLab's relay is working space for jobs in flight, and your <a href="export-and-delete.html">data export</a> covers project documents and records, not a backup of every original.</li>
+  </ul>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a href="../legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
