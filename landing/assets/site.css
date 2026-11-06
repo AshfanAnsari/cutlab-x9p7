@@ -165,3 +165,169 @@ footer.site a:hover { color: var(--accent-dark); }
   html { scroll-behavior: auto; }
   .btn { transition: none; }
 }
+
+/* ================================================================
+   START PAGE 2026-11-06 (correction #2) — the landing is an opening
+   screen modelled on Comet's start/new-tab page: one viewport, no
+   scroll, dark charcoal base, huge centred wordmark, one action
+   bar, and a glowing timeline horizon along the bottom edge as the
+   ground the brand stands on. Scoped under body.startpage; help/
+   and legal/ pages are untouched.
+   Movements: one calm settle-in on load (fade + 12px rise,
+   staggered; horizon light fades in last) and an extremely slow
+   playhead drift (±26px over 44s) along the timeline base. Both
+   stop dead under prefers-reduced-motion.
+   ================================================================ */
+
+html:has(body.startpage), body.startpage { height: 100%; }
+body.startpage {
+  margin: 0; overflow: hidden; color: #ececec;
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  background: radial-gradient(120% 90% at 50% 36%, #1e1e1e 0%, #161616 56%, #0f0f0f 100%);
+}
+body.startpage a { color: #c9c4ba; }
+body.startpage a:hover { color: #fff; }
+body.startpage a:focus-visible, body.startpage button:focus-visible {
+  outline: 2px solid #e31000; outline-offset: 3px; border-radius: 6px;
+}
+
+/* corners */
+.sp-corner {
+  position: fixed; z-index: 20; display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: #c9c4ba;
+}
+.sp-tl { top: 22px; left: 24px; font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 17px; color: #fff; }
+.sp-tl img { width: 30px; height: 30px; display: block; }
+.sp-tr { top: 22px; right: 24px; gap: 20px; }
+.sp-tr nav, .sp-tr { font-weight: 500; }
+.sp-tr a { text-decoration: none; }
+.sp-signin {
+  border: 1px solid #3a3a3a; border-radius: 999px; padding: 8px 18px; background: #212121;
+}
+.sp-signin:hover { border-color: #c0c0c0; }
+.sp-bl { bottom: 118px; left: 24px; }
+.sp-bl nav { display: flex; gap: 18px; }
+.sp-bl a { text-decoration: none; font-size: 13.5px; color: #8f8f8f; }
+.sp-bl a:hover { color: #fff; }
+.sp-br {
+  bottom: 118px; right: 24px; font-size: 13.5px; color: #8f8f8f;
+  font-family: "IBM Plex Mono", Consolas, monospace; letter-spacing: 0.04em;
+}
+
+/* centre */
+.sp-centre {
+  min-height: 100svh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 40px 20px 150px; box-sizing: border-box; position: relative; z-index: 5;
+}
+.sp-mark { width: 76px; height: 76px; display: block; margin-bottom: 10px; }
+.sp-word {
+  font-family: "Fraunces", Georgia, serif; font-weight: 600; color: #fff;
+  font-size: clamp(76px, 15vw, 156px); line-height: 1.0; margin: 0; letter-spacing: 0.005em;
+}
+.sp-line { font-size: clamp(17px, 2.4vw, 21px); color: #c9c4ba; margin: 18px 0 34px; }
+.sp-bar {
+  display: flex; align-items: center; gap: 6px;
+  background: #212121; border: 1px solid #3a3a3a; border-radius: 999px;
+  padding: 7px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  max-width: calc(100vw - 32px);
+}
+.sp-primary {
+  background: #e31000; color: #fff !important; text-decoration: none; font-weight: 600;
+  font-size: 16px; padding: 13px 28px; border-radius: 999px; white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+.sp-primary:hover { background: #b50d00; }
+.sp-quiet {
+  background: none; border: none; cursor: pointer; font: inherit;
+  color: #c9c4ba; text-decoration: none; font-size: 15.5px; font-weight: 500;
+  padding: 13px 20px; border-radius: 999px; white-space: nowrap;
+}
+.sp-quiet:hover { color: #fff; background: #2a2a2a; }
+.sp-sub {
+  margin: 18px 0 0; font-size: 13.5px; color: #8f8f8f;
+  font-family: "IBM Plex Mono", Consolas, monospace; letter-spacing: 0.04em;
+}
+
+/* THE BASE — timeline horizon */
+.sp-base {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 96px; z-index: 10;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(0,0,0,0.35));
+  border-top: 1px solid #2c2c2c; overflow: hidden;
+}
+.sp-horizon {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right,
+    rgba(192,192,192,0) 0%, rgba(192,192,192,0.22) 30%,
+    rgba(227,16,0,0.85) 58%, rgba(227,16,0,0.95) 62%, rgba(227,16,0,0.85) 66%,
+    rgba(192,192,192,0.22) 78%, rgba(192,192,192,0) 100%);
+}
+.sp-ruler {
+  position: absolute; top: 10px; left: 0; right: 0; height: 12px;
+  background-image: repeating-linear-gradient(to right, rgba(192,192,192,0.35) 0 1px, transparent 1px 64px);
+  border-bottom: 1px solid rgba(192,192,192,0.14);
+}
+.sp-clips { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; gap: 6px; padding: 0 10px; }
+.sp-clips .k { display: block; height: 40px; border-radius: 7px; background: #2a2a2a; border: 1px solid #3a3a3a; flex: none; }
+.sp-clips .k.alt { background: #232323; }
+.sp-clips .w1 { width: 9%; } .sp-clips .w2 { width: 6%; } .sp-clips .w3 { width: 11%; }
+.sp-clips .w4 { width: 7%; } .sp-clips .w5 { width: 13%; } .sp-clips .w6 { width: 5%; }
+.sp-playhead {
+  position: absolute; top: 0; bottom: 0; left: 62%; width: 2px;
+  background: #e31000; box-shadow: 0 0 14px rgba(227,16,0,0.75);
+}
+.sp-playhead::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  border: 7px solid transparent; border-top: 10px solid #e31000;
+}
+.sp-glow {
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 340px; height: 110px; pointer-events: none;
+  background: radial-gradient(50% 50% at 50% 42%, rgba(227,16,0,0.30) 0%, rgba(227,16,0,0.10) 45%, rgba(227,16,0,0) 72%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sp-playhead { animation: sp-drift 44s ease-in-out infinite alternate; }
+  @keyframes sp-drift { from { transform: translateX(-26px); } to { transform: translateX(26px); } }
+  .sp-rise { animation: sp-settle 0.85s cubic-bezier(0.22, 0.8, 0.3, 1) both; }
+  .sp-centre .sp-rise:nth-child(2) { animation-delay: 0.07s; }
+  .sp-centre .sp-rise:nth-child(3) { animation-delay: 0.14s; }
+  .sp-centre .sp-rise:nth-child(4) { animation-delay: 0.21s; }
+  .sp-centre .sp-rise:nth-child(5) { animation-delay: 0.28s; }
+  .sp-base { animation: sp-base-in 1.4s ease 0.35s both; }
+  @keyframes sp-settle { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes sp-base-in { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* demo modal */
+.sp-modal {
+  position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center;
+  background: rgba(10, 10, 10, 0.82); padding: 20px;
+}
+.sp-modal[hidden] { display: none; }
+.sp-modal-card { position: relative; width: min(1020px, 100%); }
+.sp-modal-card video {
+  width: 100%; height: auto; display: block; border-radius: 16px;
+  border: 1px solid #3a3a3a; background: #000; box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+}
+.sp-modal-card p { color: #c9c4ba; font-size: 14.5px; margin: 14px 2px 0; }
+.sp-modal-close {
+  position: absolute; top: -52px; right: 0; width: 40px; height: 40px; border-radius: 50%;
+  background: #212121; border: 1px solid #3a3a3a; color: #fff; font-size: 22px; cursor: pointer; line-height: 1;
+}
+.sp-modal-close:hover { background: #2a2a2a; }
+
+/* start page — small screens */
+@media (max-width: 640px) {
+  .sp-centre { padding-bottom: 128px; }
+  .sp-mark { width: 58px; height: 58px; }
+  .sp-bar { flex-direction: column; align-items: stretch; border-radius: 26px; width: min(340px, calc(100vw - 40px)); }
+  .sp-primary, .sp-quiet { text-align: center; }
+  .sp-base { height: 72px; }
+  .sp-clips { bottom: 10px; }
+  .sp-clips .k { height: 30px; }
+  .sp-bl { bottom: 88px; left: 16px; }
+  .sp-br { display: none; }
+  .sp-tl { top: 16px; left: 16px; }
+  .sp-tr { top: 16px; right: 16px; }
+  .sp-glow { width: 220px; }
+}
