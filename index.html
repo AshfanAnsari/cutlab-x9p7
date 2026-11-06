@@ -9,10 +9,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/cutlab-x9p7/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CutLab — video editor</title>
-    <script type="module" crossorigin src="/cutlab-x9p7/assets/index-Cm4tffi1.js"></script>
-    <link rel="stylesheet" crossorigin href="/cutlab-x9p7/assets/index-zyARtag2.css">
+    <!-- FIX C boot splash: inline on purpose — it must paint from the
+         HTML alone, before the JS bundle arrives, so first paint is
+         the brand on the app ground (#161616), never a bare dark
+         field or a white flash. No spinner, no progress bar: the
+         mark + wordmark simply hold until the app mounts, then
+         main.tsx fades this out. -->
+    <style>html{background:#161616}#boot-splash{z-index:9999;background:#161616;flex-direction:column;justify-content:center;align-items:center;gap:18px;transition:opacity .35s;display:flex;position:fixed;inset:0}#boot-splash.done{opacity:0;pointer-events:none}#boot-splash img{width:64px;height:64px;display:block}#boot-splash .boot-word{letter-spacing:.01em;color:#ececec;font-family:Fraunces,Georgia,Times New Roman,serif;font-size:30px;font-weight:600;line-height:1}@media (prefers-reduced-motion:reduce){#boot-splash{transition:none}}</style>
+    <script type="module" crossorigin src="/cutlab-x9p7/assets/index-4VcF7cgh.js"></script>
+    <link rel="stylesheet" crossorigin href="/cutlab-x9p7/assets/index-CzJlFrL4.css">
   </head>
   <body>
+    <div id="boot-splash" aria-hidden="true">
+      <img src="/cutlab-x9p7/favicon-512.png" alt="" />
+      <span class="boot-word">CutLab</span>
+    </div>
     <div id="root"></div>
   </body>
 </html>
