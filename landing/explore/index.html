@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explore CutLab — a look around the editor</title>
+<meta name="description" content="A look around CutLab before you open it: the demo, prompt edits, replicate an edit, colour, sound and analysis, the timeline, and the two ways a render can run.">
+<link rel="icon" href="../assets/logo-mark.png">
+<link rel="stylesheet" href="../assets/site.css">
+<script>document.documentElement.classList.add('js-reveal');</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo-mark.png" alt="CutLab logo"><span>CutLab</span></a>
+    <nav class="main" aria-label="Main">
+      <a href="../help/">Help</a>
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a class="btn" href="../../">Open the editor</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">Explore</p>
+    <h1>A video editor that runs in your browser.</h1>
+    <p class="lede">
+      You cut on a real timeline in a browser tab. The heavy lifting &mdash; proxies,
+      analysis and final renders &mdash; runs on the CutLab server, or on your own
+      Muse if you would rather keep the work on your machine.
+    </p>
+    <div class="cta-row">
+      <a class="btn" href="../../">Open the editor</a>
+      <a class="btn secondary" href="#demo">Watch the demo</a>
+    </div>
+    <p class="cta-note">Free during beta &middot; Nothing to install</p>
+  </div>
+
+  <section id="demo" aria-labelledby="demo-h">
+    <h2 id="demo-h">Fifty-two seconds of the real thing</h2>
+    <figure class="shot reveal">
+      <video controls preload="none" poster="../assets/demo-poster.jpg" width="1920" height="1080">
+        <source src="../assets/demo.mp4" type="video/mp4">
+      </video>
+      <figcaption>
+        The editor as it ships today &mdash; a real project, a prompt edit, a server
+        render. Narrated; there is no background music.
+      </figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="features-h">
+    <h2 id="features-h">What it does</h2>
+
+    <article class="panel reveal">
+      <figure class="shot panel-media">
+        <img src="../assets/explore-prompt.png" width="1200" height="771" loading="lazy"
+          alt="The editor's Edit page with the Prompt tab open: example prompts, a Describe the change box, and a note that the reply is checked before anything is applied">
+        <figcaption class="mono">The Prompt tab: describe the change, review the diff, apply.</figcaption>
+      </figure>
+      <div class="panel-text">
+        <h3>Prompt edits</h3>
+        <p>
+          Describe a change in plain words &mdash; <em>make the second clip black and
+          white</em>, <em>slow the last clip to half speed</em>. The assistant rewrites
+          the project on the server and shows you the diff first. Nothing is applied
+          until you accept it, and an edit that fails the check changes nothing.
+        </p>
+      </div>
+    </article>
+
+    <article class="panel flip reveal">
+      <figure class="shot panel-media">
+        <img src="../assets/explore-replicate.png" width="1400" height="396" loading="lazy"
+          alt="The Replicate an edit screen: one drop box for a reference video, one for your raw footage, and an Analyse button">
+        <figcaption class="mono">Replicate: a reference video on the left, your raw footage on the right.</figcaption>
+      </figure>
+      <div class="panel-text">
+        <h3>Replicate an edit</h3>
+        <p>
+          Drop in a finished edit and your own raw footage. The server measures the
+          reference &mdash; its cuts, beat grid and caption timing &mdash; and maps your
+          clips onto that structure. A strong draft, not a perfect clone: the reference
+          is analysed, never copied, and its audio and captions stay out of your project.
+        </p>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <figure class="shot panel-media">
+        <img src="../assets/explore-colour.png" width="1200" height="771" loading="lazy"
+          alt="The Colour page: primaries wheels, RGB curves, eight-channel HSL, a LUT picker and the project grade stack">
+        <figcaption class="mono">The Colour page: grade stack, curves, HSL, primaries wheels.</figcaption>
+      </figure>
+      <div class="panel-text">
+        <h3>Colour</h3>
+        <p>
+          Grades apply as a stack, in order: white balance and exposure, curves,
+          eight-channel HSL, primaries wheels, and a .cube LUT at the head of the chain.
+          Match every clip to one hero frame, then keep the result as a project look
+          that sits over the whole timeline.
+        </p>
+      </div>
+    </article>
+
+    <article class="panel flip reveal">
+      <figure class="shot panel-media">
+        <img src="../assets/explore-audio.png" width="1400" height="900" loading="lazy"
+          alt="The Audio page: a timeline with beat markers and an audio track, a per-track fader and master bus with Normalise minus 14 LUFS ticked, and live scopes">
+        <figcaption class="mono">The Audio page: track faders, master bus, scopes.</figcaption>
+      </figure>
+      <div class="panel-text">
+        <h3>Sound &amp; analysis</h3>
+        <p>
+          Your originals stay on your machine; the server builds the proxies, waveforms
+          and thumbnails the editor works from. In the Audio page you get per-track
+          faders and EQ, a beat grid with markers, and a master bus that normalises the
+          mix to &minus;14 LUFS at render &mdash; dialogue compressor included.
+        </p>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <figure class="shot panel-media">
+        <img src="../assets/explore-timeline.png" width="1200" height="771" loading="lazy"
+          alt="The Edit page: media bin, portrait preview, transport controls and the timeline with video and audio tracks">
+        <figcaption class="mono">The Edit page: one timeline drives both preview and render.</figcaption>
+      </figure>
+      <div class="panel-text">
+        <h3>The timeline</h3>
+        <p>
+          Split, blade, ripple delete, compound clips, captions, text and speed ramps,
+          on one timeline that behaves like a desktop editor&rsquo;s. The project is a
+          single JSON document: the same file drives the preview in your tab and the
+          render on the server, so what you see is what renders.
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <section aria-labelledby="doors-h">
+    <h2 id="doors-h">Two ways to render</h2>
+    <p class="section-intro">
+      When the edit is done, the render leaves your tab. Which machine does the work is
+      your choice, made in the same Export dialog:
+    </p>
+    <figure class="shot reveal">
+      <img src="../assets/export-panel.png" width="1600" height="1000" loading="lazy"
+        alt="The Export dialog: Render with offers CutLab server or My Muse, above the container, codec and quality settings and the Render on server button">
+      <figcaption class="mono">Export: one dialog, two render doors.</figcaption>
+    </figure>
+    <div class="doors">
+      <div class="door reveal">
+        <h3>CutLab server</h3>
+        <p>
+          Queue it and keep this tab open. The server renders the exact project JSON
+          your preview uses, and the finished MP4 downloads here as soon as it is done.
+        </p>
+        <p><a href="../help/files-and-quotas.html">What counts toward your storage</a></p>
+      </div>
+      <div class="door reveal">
+        <h3>Your own Muse</h3>
+        <p>
+          Your Muse claims the job, renders it on its machine with the official
+          CutLab renderer, and uploads the MP4 back to your queue. The minutes are
+          yours, and the queue is never shared.
+        </p>
+        <p>
+          <a href="../help/render-with-your-claude.html">Render with your Muse, step by step</a><br>
+          <a href="../help/connect-your-ai.html">Connect your AI first</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="facts-h">
+    <h2 id="facts-h" class="sr-only">The beta in numbers</h2>
+    <div class="facts-band reveal">
+      <div class="fact">
+        <span class="fact-num">200 MB</span>
+        <span class="fact-label">working storage per account</span>
+      </div>
+      <div class="fact">
+        <span class="fact-num">50 MB</span>
+        <span class="fact-label">largest single file</span>
+      </div>
+      <div class="fact">
+        <span class="fact-num">Free</span>
+        <span class="fact-label">during beta &mdash; no card, no plan</span>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq-h">
+    <h2 id="faq-h">Questions</h2>
+
+    <div class="faq-item">
+      <h3 class="faq-head">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a1" id="faq-q1">
+          Where do my files live?
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>
+        <p>
+          Your originals stay on your machine &mdash; the editor keeps the open project
+          and a media cache in your browser, and you can edit signed out. Files only go
+          to the relay when you save to the cloud or queue a job, into storage space
+          that belongs to your account alone.
+          <a href="../help/files-and-quotas.html">Files and quotas, in full</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-head">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">
+          How does rendering work?
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden>
+        <p>
+          Rendering never happens in your tab. Queue on the CutLab server and the
+          finished MP4 downloads here; or send the job to your own Muse, which renders
+          it on its machine with the official renderer and uploads the file back to
+          your queue.
+          <a href="../help/render-with-your-claude.html">Render with your Muse, in full</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-head">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">
+          Can my own AI work on my projects?
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden>
+        <p>
+          Yes. Create a connect token in Settings and hand it to your Muse: it can
+          read your projects, run prompt edits and claim renders you queue for it. The
+          token is scoped to your account, the relay stores only a hash of it, and you
+          can revoke it whenever you like.
+          <a href="../help/connect-your-ai.html">Connect your AI, in full</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-head">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">
+          What does the beta cost?
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden>
+        <p>
+          Nothing. CutLab is free during beta, with two limits that keep the shared
+          relay fair: 200 MB of working storage per account and 50 MB per file.
+          <a href="../help/files-and-quotas.html">Files and quotas, in full</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 class="faq-head">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">
+          How do I get my data out &mdash; or delete everything?
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden>
+        <p>
+          From Account in the editor: Export my data builds one zip of your projects,
+          media manifest and job history. Delete account removes your files, records
+          and login after you type your email to confirm. One thing to know: the same
+          login works for Our Study Home, so deleting it deletes that login for both.
+          <a href="../help/export-and-delete.html">Export and delete, in full</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="close reveal" aria-labelledby="close-h">
+    <h2 id="close-h">Open it and cut something.</h2>
+    <p><a class="btn" href="../../">Open the editor</a></p>
+    <p class="cta-note">Free during beta &middot; Nothing to install</p>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>CutLab, a browser video editor in beta.</span>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms</a>
+      <a href="../legal/privacy.html">Privacy</a>
+      <a href="../legal/content-policy.html">Content policy</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // FAQ accordion: buttons are native <button>s, so Enter/Space work
+  // without extra handling; this only toggles the region + state.
+  var buttons = document.querySelectorAll('.faq-q');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var region = document.getElementById(btn.getAttribute('aria-controls'));
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      if (region) region.hidden = open;
+    });
+  });
+
+  // Reveal once, when a block first enters the viewport. The hidden
+  // start state only exists when this script ran (html.js-reveal) and
+  // the visitor allows motion — see the explore block in site.css.
+  var blocks = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    blocks.forEach(function (b) { b.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  blocks.forEach(function (b) { io.observe(b); });
+})();
+</script>
+
+</body>
+</html>
