@@ -103,6 +103,13 @@ figure.shot video {
 }
 figure.shot figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 figure.shot.narrow img { max-width: 760px; }
+/* help teaching figures: mono caption; small native shots stay at
+   natural size instead of being stretched to the prose measure */
+figure.shot figcaption.mono {
+  font-family: "IBM Plex Mono", Consolas, monospace; font-size: 12.5px; letter-spacing: 0.05em;
+}
+.prose figure.shot { margin: 28px 0; }
+figure.shot.natural img { width: auto; max-width: 100%; }
 
 /* sections */
 section { padding: 44px 0; border-top: 1px solid var(--hairline); }
@@ -139,10 +146,20 @@ table.facts td:first-child { font-weight: 600; white-space: nowrap; }
 .prose h2:first-of-type { margin-top: 8px; }
 code, .mono { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 0.92em; }
 code { background: var(--code-bg); color: #f0ede6; padding: 1px 5px; border-radius: 4px; }
+/* long unbroken strings (URLs, tokens) must never escape their box:
+   inline code and link text break anywhere; pre blocks wrap first and
+   only fall back to a slim themed horizontal scrollbar */
+.prose code, .prose a { overflow-wrap: anywhere; }
 pre {
   background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 6px;
-  padding: 14px 16px; overflow-x: auto; font-size: 14px; line-height: 1.5; color: #f0ede6;
+  padding: 14px 16px; max-width: 100%; overflow-x: auto;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+  font-size: 14px; line-height: 1.5; color: #f0ede6;
+  scrollbar-width: thin; scrollbar-color: #4a4a44 transparent;
 }
+pre::-webkit-scrollbar { height: 6px; }
+pre::-webkit-scrollbar-thumb { background: #4a4a44; border-radius: 3px; }
+pre::-webkit-scrollbar-track { background: transparent; }
 pre code { background: none; padding: 0; }
 .note {
   border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 20px 0; color: var(--secondary);
@@ -157,6 +174,16 @@ pre code { background: none; padding: 0; }
 .help-list a { font-weight: 600; font-size: 18px; color: #f5f4f0; }
 .help-list a:hover { color: #fff; }
 .help-list p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+/* help index topic marks: one hand-drawn inline SVG line mark per
+   topic (silver stroke, at most one Signal Red detail), sitting in a
+   small charcoal chip — no icon font, no emoji, no gradients */
+.help-list li { display: flex; gap: 16px; align-items: flex-start; }
+.help-ico {
+  flex: none; width: 42px; height: 42px; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: 10px;
+}
+.help-ico svg { display: block; }
 
 /* footer — legal row, then a quiet, short version of the landing's
    timeline base as the page's ground line (pure CSS, no markup) */
