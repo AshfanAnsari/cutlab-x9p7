@@ -341,7 +341,12 @@ body.startpage a:focus-visible, body.startpage button:focus-visible {
   z-index: 0; pointer-events: none; opacity: 0.55;
 }
 
-/* centre */
+/* centre — GROUP PASS 2026-11-06: the previous page's single-group
+   layout restored verbatim (hero + action bar + microcopy as ONE
+   centred column with the previous page's own margins; user: "the
+   CutLab whole section was closer too"). This supersedes the TIGHT
+   PASS's split (hero high, pill + microcopy anchored to the floor),
+   which opened dead space between the tagline and the pill. */
 .sp-centre {
   min-height: 100svh; display: flex; flex-direction: column;
   align-items: center; justify-content: center; text-align: center;
@@ -466,3 +471,31 @@ body.startpage a:focus-visible, body.startpage button:focus-visible {
   .sp-glow { width: 220px; }
 }
 
+
+/* ================================================================
+   COMBINED PASS 2026-11-06 — the remake's effects grafted onto the
+   start page (user: previous section + those effects). Full-
+   strength interactive backdrop (his canvas sat at 0.7), the
+   playhead retired from its 44s idle drift to follow the cursor,
+   and the RADIO: a Signal Red segment sliding between the action
+   bar's items on the remake's spring (450/32), painted by the
+   effects script in index.html. Start-page classes only — help/
+   and legal/ pages never use them.
+   ================================================================ */
+#sp-field { opacity: 0.7; }
+.sp-playhead { animation: none; }
+.sp-bar { position: relative; }
+.sp-seg {
+  position: absolute; left: 0; top: 0; width: 0; height: 0;
+  border-radius: 999px; background: #e31000; opacity: 0;
+  box-shadow: 0 10px 26px rgba(227, 16, 0, 0.35);
+  pointer-events: none;
+}
+.sp-bar .sp-primary, .sp-bar .sp-quiet {
+  position: relative; z-index: 1;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.sp-bar.sp-live .sp-primary { background: transparent; }
+.sp-bar.sp-live .sp-primary:hover { background: transparent; }
+.sp-bar.sp-live .sp-quiet:hover { background: transparent; }
+.sp-bar .sp-quiet.sp-on { color: #fff; }
