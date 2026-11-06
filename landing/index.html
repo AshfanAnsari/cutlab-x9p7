@@ -1,17 +1,389 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CutLab — Prompt-First Video Editor</title>
-    <meta name="description" content="CutLab is a timeline video editor that runs in your browser. Free during beta — nothing to install." />
-    <link rel="icon" href="assets/logo-mark.png" />
-    <!-- Fonts are self-hosted (@font-face in the built CSS, files in
-         assets/fonts/) — no Google Fonts requests. -->
-    <script type="module" crossorigin src="assets/landing.js"></script>
-    <link rel="stylesheet" crossorigin href="assets/landing.css">
-  </head>
-  <body class="bg-background text-moonlit selection:bg-accent selection:text-white antialiased overflow-hidden">
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CutLab — your video editor, in the browser</title>
+<meta name="description" content="CutLab is a timeline video editor that runs in your browser. Editing stays light on your machine; proxies, analysis and final renders run on the CutLab server or on your own Muse. Free during beta.">
+<link rel="icon" href="assets/logo-mark.png">
+<link rel="preload" href="assets/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="startpage">
+
+<!-- COMBINED PASS 2026-11-06: this page is our previous start page
+     with the remake's effects grafted on (user: "i like [the previous]
+     section but i want those effects"). The canvas behind the brand
+     runs the remake's InteractiveBackdrop behaviour — scan lines,
+     dashed red cursor beam, pulse ring, particles drawn to the
+     cursor. Painted by the effects script at the foot; reduced-motion
+     gets one static frame, no beam. -->
+<canvas id="sp-field" aria-hidden="true"></canvas>
+
+<!-- Start page: one viewport, no scroll. Corners minimal, centre is the
+     brand on its action bar, and the base is a lit timeline horizon. -->
+
+<div class="sp-corner sp-tl sp-rise">
+  <img src="assets/logo-mark.png" alt="CutLab logo">
+  <span>CutLab</span>
+</div>
+
+<nav class="sp-corner sp-tr sp-rise" aria-label="Main">
+  <a href="help/">Help</a>
+  <a class="sp-signin" href="../">Sign in</a>
+</nav>
+
+<main class="sp-centre">
+  <span class="sp-mark-wrap sp-rise"><span class="sp-halo" aria-hidden="true"></span><img class="sp-mark" src="assets/logo-mark.png" alt="CutLab logo" width="76" height="76"></span>
+  <h1 class="sp-word sp-rise">CutLab</h1>
+  <p class="sp-line sp-rise">Your video editor, in the browser.</p>
+
+  <div class="sp-bar sp-rise" role="group" aria-label="Start">
+    <span class="sp-seg" aria-hidden="true"></span>
+    <a class="sp-primary" href="../">Open the editor</a>
+    <a class="sp-quiet" href="../#new">New project</a>
+    <button class="sp-quiet" type="button" id="demoOpen">Watch the demo</button>
+  </div>
+  <p class="sp-sub sp-rise">Free during beta &middot; Nothing to install</p>
+</main>
+
+<div class="sp-corner sp-bl sp-rise">
+  <nav aria-label="Legal">
+    <a href="legal/terms.html">Terms</a>
+    <a href="legal/privacy.html">Privacy</a>
+    <a href="legal/content-policy.html">Content policy</a>
+  </nav>
+</div>
+
+
+<!-- THE BASE: a timeline horizon. Ruler ticks and clip blocks run the full
+     width; the light concentrates at one Signal Red playhead. -->
+<div class="sp-base" aria-hidden="true">
+  <div class="sp-horizon"></div>
+  <div class="sp-ruler"></div>
+  <div class="sp-clips">
+    <span class="k w1"></span><span class="k w2 alt"></span><span class="k w3"></span>
+    <span class="k w4 alt"></span><span class="k w5"></span><span class="k w2"></span>
+    <span class="k w6 alt"></span><span class="k w3"></span><span class="k w4"></span>
+    <span class="k w1 alt"></span><span class="k w5"></span><span class="k w3 alt"></span>
+  </div>
+  <div class="sp-playhead"><span class="sp-glow"></span></div>
+</div>
+
+<!-- Demo overlay player (scroll-free) -->
+<div class="sp-modal" id="demoModal" hidden role="dialog" aria-modal="true" aria-label="CutLab demo video">
+  <div class="sp-modal-card">
+    <button class="sp-modal-close" type="button" id="demoClose" aria-label="Close demo">&times;</button>
+    <video id="demoVideo" controls preload="none" poster="assets/demo-poster.jpg" width="1920" height="1080">
+      <source src="assets/demo.mp4" type="video/mp4">
+    </video>
+    <p>The editor as it ships today &mdash; 52 seconds, narrated. A real project, a prompt edit, a server render.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var modal = document.getElementById('demoModal');
+  var openBtn = document.getElementById('demoOpen');
+  var closeBtn = document.getElementById('demoClose');
+  var video = document.getElementById('demoVideo');
+  if (!modal || !openBtn || !closeBtn || !video) return;
+
+  function open() {
+    modal.hidden = false;
+    closeBtn.focus();
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { /* user can press play */ });
+  }
+  function close() {
+    video.pause();
+    modal.hidden = true;
+    openBtn.focus();
+  }
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+})();
+</script>
+
+<script>
+/* COMBINED EFFECTS 2026-11-06 — the remake's effects on our start page.
+ *
+ * 1) BACKDROP: the remake's InteractiveBackdrop, values verbatim —
+ *    scan lines every 80px, the dashed Signal Red cursor beam with
+ *    lerp smoothing (0.08), pulse ring + red dot at the cursor,
+ *    keyframe particles attracted to the cursor within 180px and
+ *    brightening near it, links under 110px, ~12% red particles.
+ * 2) TIMELINE HORIZON: the red playhead needle follows the mouse X
+ *    like his TimelineHorizon (clamped 1–99%), smoothed; the horizon
+ *    light band re-anchors on the needle so the glow travels with it.
+ * 3) THE RADIO: the action bar's red segment slides between actions
+ *    on his SegmentedToggle spring (stiffness 450, damping 32),
+ *    following hover/focus and settling back on "Open the editor".
+ *    Clicks are untouched — every action still does its real job.
+ * Reduced motion: one static backdrop frame (no beam, no loop),
+ * playhead parked at its rest position, segment moves instantly. */
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- shared mouse state (his lerp model) ---------- */
+  var mouse = {
+    x: window.innerWidth / 2, y: window.innerHeight / 2,
+    targetX: window.innerWidth / 2, targetY: window.innerHeight / 2,
+    isHovered: false
+  };
+  if (!reduced) {
+    window.addEventListener('mousemove', function (e) {
+      /* Chromium fires one synthetic mousemove at (0,0) when a page
+         activates — it is not the visitor's cursor; ignore it so the
+         beam and needle stay parked until a real move arrives. */
+      if (e.clientX === 0 && e.clientY === 0 && !mouse.isHovered) return;
+      mouse.targetX = e.clientX;
+      mouse.targetY = e.clientY;
+      mouse.isHovered = true;
+    });
+    document.body.addEventListener('mouseleave', function () {
+      mouse.isHovered = false;
+      mouse.targetX = window.innerWidth / 2;
+      mouse.targetY = window.innerHeight / 2;
+    });
+  }
+
+  /* ---------- 1) backdrop ---------- */
+  var canvas = document.getElementById('sp-field');
+  var ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+  var W = 0, H = 0, particles = [];
+  function seedBackdrop() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    var count = Math.min(50, Math.floor(W / 30));
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() < 0.15 ? 3 : 1.5,
+        baseAlpha: Math.random() * 0.35 + 0.1,
+        alpha: 0.2,
+        isRed: Math.random() < 0.12
+      });
+    }
+  }
+  function drawBackdrop() {
+    mouse.x += (mouse.targetX - mouse.x) * 0.08;
+    mouse.y += (mouse.targetY - mouse.y) * 0.08;
+    ctx.clearRect(0, 0, W, H);
+
+    /* scan lines */
+    ctx.strokeStyle = 'rgba(58, 58, 58, 0.18)';
+    ctx.lineWidth = 1;
+    var step = 80;
+    for (var y = step; y < H; y += step) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+
+    /* cursor beam + pulse */
+    if (mouse.isHovered) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(227, 16, 0, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.moveTo(mouse.x, 0);
+      ctx.lineTo(mouse.x, H);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 45, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(227, 16, 0, 0.15)';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#E31000';
+      ctx.fill();
+    }
+
+    /* particles */
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      var dx = mouse.x - p.x;
+      var dy = mouse.y - p.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 180) {
+        var force = (1 - dist / 180) * 0.02;
+        p.x += dx * force;
+        p.y += dy * force;
+        p.alpha = Math.min(0.9, p.baseAlpha + (1 - dist / 180) * 0.6);
+      } else {
+        p.alpha = p.baseAlpha;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.isRed
+        ? 'rgba(227, 16, 0, ' + p.alpha + ')'
+        : 'rgba(236, 236, 236, ' + p.alpha + ')';
+      ctx.fill();
+
+      for (var j = i + 1; j < particles.length; j++) {
+        var p2 = particles[j];
+        var cdx = p.x - p2.x;
+        var cdy = p.y - p2.y;
+        var cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+        if (cdist < 110) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = (p.isRed || p2.isRed)
+            ? 'rgba(227, 16, 0, ' + (0.12 * (1 - cdist / 110)) + ')'
+            : 'rgba(168, 168, 168, ' + (0.1 * (1 - cdist / 110)) + ')';
+          ctx.lineWidth = 0.75;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  /* ---------- 2) timeline playhead ---------- */
+  var playhead = document.querySelector('.sp-playhead');
+  var horizon = document.querySelector('.sp-horizon');
+  var needle = 62, needleShown = -1; /* rest position, matches the CSS */
+  function drawNeedle(dt) {
+    var target = Math.max(1, Math.min(99, (mouse.targetX / window.innerWidth) * 100));
+    if (!mouse.isHovered) target = needle; /* park at last position */
+    var k = 1 - Math.exp(-dt / 0.075); /* his 75ms smoothing */
+    needle += (target - needle) * k;
+    if (Math.abs(needle - needleShown) < 0.02) return;
+    needleShown = needle;
+    if (playhead) playhead.style.left = needle + '%';
+    if (horizon) {
+      var p = needle;
+      function c(v) { return Math.max(0, Math.min(100, v)); }
+      horizon.style.background =
+        'linear-gradient(to right,' +
+        ' rgba(192,192,192,0) 0%,' +
+        ' rgba(192,192,192,0.22) ' + c(p - 32) + '%,' +
+        ' rgba(227,16,0,0.85) ' + c(p - 4) + '%,' +
+        ' rgba(227,16,0,0.95) ' + c(p) + '%,' +
+        ' rgba(227,16,0,0.85) ' + c(p + 4) + '%,' +
+        ' rgba(192,192,192,0.22) ' + c(p + 16) + '%,' +
+        ' rgba(192,192,192,0) 100%)';
+    }
+  }
+
+  /* ---------- 3) the radio (sliding red segment) ---------- */
+  var bar = document.querySelector('.sp-bar');
+  var seg = document.querySelector('.sp-seg');
+  var primary = document.querySelector('.sp-primary');
+  var segTarget = primary;
+  var segState = null; /* {x,y,w,h,vx,vy,vw,vh} */
+  function targetRect() {
+    if (!bar || !segTarget) return null;
+    var b = bar.getBoundingClientRect();
+    var r = segTarget.getBoundingClientRect();
+    return { x: r.left - b.left, y: r.top - b.top, w: r.width, h: r.height };
+  }
+  function paintSeg(s) {
+    seg.style.left = s.x + 'px';
+    seg.style.top = s.y + 'px';
+    seg.style.width = s.w + 'px';
+    seg.style.height = s.h + 'px';
+    seg.style.opacity = '1';
+  }
+  function setTarget(item) {
+    if (!item || item === segTarget && segState) { segTarget = item; markOn(); return; }
+    segTarget = item;
+    markOn();
+    if (reduced) { var r = targetRect(); if (r) { segState = { x: r.x, y: r.y, w: r.w, h: r.h, vx: 0, vy: 0, vw: 0, vh: 0 }; paintSeg(segState); } }
+  }
+  function markOn() {
+    var items = bar ? bar.querySelectorAll('.sp-primary, .sp-quiet') : [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i] === segTarget) items[i].classList.add('sp-on');
+      else items[i].classList.remove('sp-on');
+    }
+  }
+  function springSeg(dt) {
+    var r = targetRect();
+    if (!r) return;
+    if (!segState) {
+      segState = { x: r.x, y: r.y, w: r.w, h: r.h, vx: 0, vy: 0, vw: 0, vh: 0 };
+      paintSeg(segState);
+      return;
+    }
+    var K = 450, C = 32; /* his SegmentedToggle spring */
+    var keys = ['x', 'y', 'w', 'h'];
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i], vkey = 'v' + key;
+      var a = K * (r[key] - segState[key]) - C * segState[vkey];
+      segState[vkey] += a * dt;
+      segState[key] += segState[vkey] * dt;
+    }
+    paintSeg(segState);
+  }
+  if (bar && seg && primary) {
+    bar.classList.add('sp-live');
+    var items = bar.querySelectorAll('.sp-primary, .sp-quiet');
+    for (var i = 0; i < items.length; i++) {
+      items[i].addEventListener('pointerenter', function () { setTarget(this); });
+      items[i].addEventListener('focus', function () { setTarget(this); });
+    }
+    bar.addEventListener('pointerleave', function () { setTarget(primary); });
+    bar.addEventListener('focusout', function (e) {
+      if (!bar.contains(e.relatedTarget)) setTarget(primary);
+    });
+    markOn();
+  }
+
+  /* ---------- shared loop ---------- */
+  var last = 0;
+  function frame(ts) {
+    var dt = Math.min(0.033, last ? (ts - last) / 1000 : 0.016);
+    last = ts;
+    if (ctx) drawBackdrop();
+    drawNeedle(dt);
+    if (bar && seg) springSeg(dt);
+    requestAnimationFrame(frame);
+  }
+  function init() {
+    if (ctx) {
+      seedBackdrop();
+      if (reduced) { drawBackdrop(); }
+    }
+    if (reduced) {
+      var r = targetRect();
+      if (r && seg) { segState = { x: r.x, y: r.y, w: r.w, h: r.h, vx: 0, vy: 0, vw: 0, vh: 0 }; paintSeg(segState); }
+    } else {
+      requestAnimationFrame(frame);
+    }
+  }
+  var resizeTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (ctx) { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; if (reduced) drawBackdrop(); }
+      segState = null; /* re-snap the segment on the next frame */
+      needleShown = -1;
+    }, 160);
+  });
+  if (document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+
+</body>
 </html>
