@@ -6,6 +6,64 @@
    never body text. Body #EDEDEA and secondary #B9B9B4 both clear
    WCAG AA on the charcoal ground. */
 
+/* Self-hosted fonts (2026-11-06) — no Google Fonts requests anywhere:
+   the three families live in assets/fonts/ as latin-subset woff2, so
+   the design arrives even on networks where the CDN is unreachable.
+   Only the weights the CSS actually applies are shipped: Fraunces 600
+   (every heading + wordmark), Plex Sans 400/500/600, Plex Mono 400/500.
+   Fraunces 500 and Fraunces italic were in the old CDN request but no
+   rule or page ever used them, so they are not carried over. Plex Sans
+   ships as its variable font (wght axis) in one file, declared per
+   weight exactly as the CDN declared it. Total payload: 93,404 B. */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/fraunces-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/plex-sans-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/plex-sans-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/plex-sans-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/plex-mono-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/plex-mono-500.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --bg: #141414;
   --surface: #1d1d1d;
@@ -133,6 +191,8 @@ table.facts th, table.facts td {
 table.facts th { font-family: "IBM Plex Mono", Consolas, monospace; font-size: 13px;
   letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
 table.facts td:first-child { font-weight: 600; white-space: nowrap; }
+/* quota/limit figures line up digit-for-digit down the column */
+table.facts td { font-variant-numeric: tabular-nums; }
 
 /* prose pages (help + legal) — readability governs: ~68ch measure,
    generous leading, AA body text on the charcoal ground */
